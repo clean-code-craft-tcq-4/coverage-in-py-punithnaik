@@ -23,6 +23,20 @@ class TypewiseTest(unittest.TestCase):
     mock_send_to_controller.assert_called_once()
     typewise_alert.check_and_alert('TO_EMAIL', batteryChar,0)
     mock_send_to_email.assert_called_once()
+
+  #Mocking print function
+  @patch('builtins.print')
+  def test_send_to_controller(self,mock_print):
+    typewise_alert.send_to_controller('TOO_LOW')
+    mock_print.assert_called_with('65261, TOO_LOW')
+
+  #Mocking print function
+  @patch('builtins.print')
+  def test_send_to_email(self,mock_print):
+    typewise_alert.send_to_email('TOO_LOW')
+    mock_print.assert_called_with('Hi, the temperature is too low')
+    typewise_alert.send_to_email('TOO_HIGH')
+    mock_print.assert_called_with('Hi, the temperature is too high')
     
 if __name__ == '__main__':
   unittest.main()
